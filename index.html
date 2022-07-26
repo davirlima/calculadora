@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="js/calculator.js"></script>
+    <title>Calculadora</title>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="valueContainer">
+          <span id="equationArea"></span>
+          <p id="resultArea">0</p>
+        </div>
+
+        <div class="buttonsContainer">
+          <div>
+            <button onclick="print('7')">7</button>
+            <button onclick="print('8')">8</button>
+            <button onclick="print('9')">9</button>
+            <button class="clear" onclick="print('C')">C</button>
+          </div>
+          <div>
+            <button onclick="print('4')">4</button>
+            <button onclick="print('5')">5</button>
+            <button onclick="print('6')">6</button>
+            <button class="operator" onclick="print('*')">*</button>
+          </div>
+          <div>
+            <button onclick="print('1')">1</button>
+            <button onclick="print('2')">2</button>
+            <button onclick="print('3')">3</button>
+            <button class="operator" onclick="print('/')">/</button>
+          </div>
+          <div>
+            <button onclick="print('0')">0</button>
+            <button
+              class="operator"
+              onclick="print('.')"
+              style="font-size: 1.7rem"
+            >
+              .
+            </button>
+            <button class="operator" onclick="print('+')">+</button>
+            <button class="operator" onclick="print('-')">-</button>
+          </div>
+          <div>
+            <button class="operator result" onclick="print( '=')">=</button>
+            <button class="clear" onclick="print('<')"><</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -57,11 +57,7 @@ function print(value) {
         number2 = parseFloat(resultArea.innerText);
       }
       equationArea.innerHTML += `${number2} =`;
-      resultArea.innerHTML = calculate(
-        number1,
-        number2,
-        operatorEquation
-      ).toFixed(10);
+      resultArea.innerHTML = calculate(number1, number2, operatorEquation);
       defaultResult = true;
       automaticCount = true;
       number1 = null;
@@ -125,7 +121,9 @@ function print(value) {
       automaticCount = true;
       break;
   }
+  console.log(resultArea.innerText.length);
   if (resultArea.innerText.length > 10) {
+    console.log("Entrou aqui");
     resultArea.innerHTML = parseFloat(resultArea.innerText).toFixed(10);
   }
 }

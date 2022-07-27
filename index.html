@@ -21,7 +21,7 @@
             <button onclick="print('7')">7</button>
             <button onclick="print('8')">8</button>
             <button onclick="print('9')">9</button>
-            <button class="clear" onclick="print('C')">C</button>
+            <button class="clear" onclick="clearAll()">C</button>
           </div>
           <div>
             <button onclick="print('4')">4</button>
@@ -39,17 +39,17 @@
             <button onclick="print('0')">0</button>
             <button
               class="operator"
-              onclick="print('.')"
+              onclick="print(',')"
               style="font-size: 1.7rem"
             >
-              .
+              ,
             </button>
             <button class="operator" onclick="print('+')">+</button>
             <button class="operator" onclick="print('-')">-</button>
           </div>
           <div>
             <button class="operator result" onclick="print( '=')">=</button>
-            <button class="clear" onclick="print('<')"><</button>
+            <button class="clear" onclick="backspace()"><</button>
           </div>
         </div>
       </div>

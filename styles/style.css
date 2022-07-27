@@ -56,6 +56,7 @@ body {
   padding-bottom: 0.5rem;
   font-size: 2rem;
   color: #f7f7f7;
+  max-width: 100%;
 }
 
 .buttonsContainer {

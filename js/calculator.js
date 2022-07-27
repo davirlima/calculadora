@@ -1,6 +1,41 @@
-function calculate(number1, number2, operator) {
+let defaultResult = true;
+
+let number1 = null;
+let number2 = null;
+
+let alreadyCalculate = false;
+let automaticCalculate = true;
+
+function clearAll() {
+  document.getElementById("resultArea").innerHTML = "0";
+  document.getElementById("resultArea").style.fontSize = "2rem";
+
+  document.getElementById("equationArea").innerHTML = "";
+
+  defaultResult = true;
+  automaticCalculate = false;
+  number1 = null;
+  number2 = null;
+}
+
+function backspace() {
+  document.getElementById("resultArea").innerHTML = document
+    .getElementById("resultArea")
+    .innerText.slice(
+      0,
+      document.getElementById("resultArea").innerText.length - 1
+    );
+
+  if (document.getElementById("resultArea").innerText == "") {
+    document.getElementById("resultArea").innerText = "0";
+    defaultResult = true;
+  }
+}
+
+function calculate(number1, number2) {
   let answer = 0;
-  switch (operator) {
+
+  switch (document.getElementById("equationArea").innerText.split(" ")[1]) {
     case "+":
       answer = number1 + number2;
       break;
@@ -16,114 +51,126 @@ function calculate(number1, number2, operator) {
     default:
       break;
   }
-  return answer;
+
+  if (answer.toString().length > 16) {
+    let beforeDot = answer
+      .toString()
+      .slice(0, answer.toString().indexOf(".")).length;
+    document.getElementById("resultArea").style.fontSize = "1.6rem";
+
+    return answer
+      .toFixed(16 - beforeDot - 1)
+      .toString()
+      .replace(".", ",");
+  } else {
+    return answer.toString().replace(".", ",");
+  }
 }
 
-const operatorArray = ["+", "-", "*", "/"];
-let defaultResult = true;
-let automaticCount = true;
-let number1 = null;
-let number2 = null;
-
 function print(value) {
-  let resultArea = document.getElementById("resultArea");
-  let lastResultValue = resultArea.innerText[resultArea.innerText.length - 1];
-
-  let equationArea = document.getElementById("equationArea");
-  let lastEquationValue =
-    equationArea.innerText[equationArea.innerText.length - 1];
-  let operatorEquation = equationArea.innerText.split(" ")[1];
-
   switch (value) {
-    case "C":
-      resultArea.innerText = "0";
-      equationArea.innerHTML = "";
-      defaultResult = true;
-      number1 = null;
-      number2 = null;
-      break;
-    case "<":
-      resultArea.innerHTML = resultArea.innerText.slice(
-        0,
-        resultArea.innerText.length - 1
-      );
-      if (resultArea.innerText == "") {
-        resultArea.innerHTML = "0";
-        defaultResult = true;
-      }
-      break;
     case "=":
-      if (number2 == null) {
-        number2 = parseFloat(resultArea.innerText);
+      if (alreadyCalculate == false) {
+        if (number1 == null) {
+          break;
+        }
+        if (number2 == null) {
+          number2 = parseFloat(
+            document.getElementById("resultArea").innerText.replace(",", ".")
+          );
+          document.getElementById("equationArea").innerHTML +=
+            number2.toString().replace(".", ",") + " =";
+        }
+
+        document.getElementById("resultArea").innerHTML = calculate(
+          number1,
+          number2
+        );
       }
-      equationArea.innerHTML += `${number2} =`;
-      resultArea.innerHTML = calculate(number1, number2, operatorEquation);
+
       defaultResult = true;
-      automaticCount = true;
+      alreadyCalculate = true;
+      automaticCalculate = false;
       number1 = null;
       number2 = null;
       break;
-    case ".":
-      if (lastResultValue == ".") {
-        resultArea.innerHTML += "";
-        // -> Ideia - fazer borda piscar do resultArea piscar
-      } else if (automaticCount == false) {
-        resultArea.innerHTML = "0.";
-        automaticCount = true;
+
+    case ",":
+      // if (canDigit == true) {
+      if (
+        document.getElementById("resultArea").innerText[
+          document.getElementById("resultArea").innerText.length - 1
+        ] == ","
+      ) {
+        document.getElementById("resultArea").innerHTML += "";
+      } else if (defaultResult == true) {
+        document.getElementById("resultArea").innerHTML = "0,";
         defaultResult = false;
+        // automaticCount = true;
+        // alreadyCount = false;
       } else {
-        resultArea.innerHTML += value;
+        document.getElementById("resultArea").innerHTML += ",";
       }
-      defaultResult = false;
+      // }
       break;
+
     case "+":
     case "-":
     case "*":
     case "/":
-      if (number1 == null) {
-        number1 = parseFloat(resultArea.innerText);
-      } else if (automaticCount == true) {
-        number2 = parseFloat(resultArea.innerText);
-        resultArea.innerHTML = calculate(number1, number2, operatorEquation);
-        equationArea.innerHTML = resultArea.innerText + ` ${value} `;
-        number1 = parseFloat(resultArea.innerText);
-        automaticCount = false;
-        defaultResult = false;
-        number2 = null;
-        break;
-      }
+      document.getElementById("resultArea").style.fontSize = "2rem";
       if (defaultResult == true) {
-        equationArea.innerHTML = resultArea.innerText + ` ${value} `;
-        resultArea.innerHTML = "0";
-      } else if (lastResultValue == ".") {
-        equationArea.innerHTML =
-          resultArea.innerText.slice(0, resultArea.innerText.length - 1) +
-          ` ${value} `;
+        document.getElementById("equationArea").innerHTML =
+          document
+            .getElementById("equationArea")
+            .innerText.slice(
+              0,
+              document.getElementById("equationArea").innerText.length - 1
+            ) + ` ${value} `;
+      }
+      if (number1 == null) {
+        number1 = parseFloat(
+          document.getElementById("resultArea").innerText.replace(",", ".")
+        );
+        document.getElementById("equationArea").innerHTML =
+          number1.toString().replace(".", ",") + ` ${value} `;
+        document.getElementById("resultArea").innerHTML = "0";
         defaultResult = true;
-        resultArea.innerHTML = "0";
-      } else if (operatorArray.includes(lastEquationValue)) {
-        equationArea.innerHTML =
-          equationArea.innerText.slice(0, equationArea.innerText.length - 1) +
-          ` ${value} `;
-      } else {
-        equationArea.innerHTML = resultArea.innerText + ` ${value} `;
-        resultArea.innerHTML = "0";
+        alreadyCalculate = false;
+      } else if (automaticCalculate == false) {
+        number2 = parseFloat(
+          document.getElementById("resultArea").innerText.replace(",", ".")
+        );
+
+        number1 = parseFloat(calculate(number1, number2));
+        number2 = null;
+        document.getElementById("equationArea").innerHTML =
+          number1.toString().replace(".", ",") + ` ${value} `;
+
+        document.getElementById("resultArea").innerHTML = number1
+          .toString()
+          .replace(".", ",");
+
         defaultResult = true;
+        automaticCalculate = true;
+        alreadyCalculate = false;
       }
       break;
+
     default:
-      if (defaultResult == true || automaticCount == false) {
-        resultArea.innerHTML = value;
+      if (defaultResult == true) {
+        if (alreadyCalculate == true) {
+          document.getElementById("equationArea").innerHTML = "";
+        }
+        document.getElementById("resultArea").style.fontSize = "2rem";
+        document.getElementById("resultArea").innerHTML = value;
+
         defaultResult = false;
+        alreadyCalculate = false;
+        automaticCalculate = false;
       } else {
-        resultArea.innerHTML += value;
+        document.getElementById("resultArea").innerHTML += value;
       }
-      automaticCount = true;
       break;
-  }
-  console.log(resultArea.innerText.length);
-  if (resultArea.innerText.length > 10) {
-    console.log("Entrou aqui");
-    resultArea.innerHTML = parseFloat(resultArea.innerText).toFixed(10);
   }
 }

@@ -15,6 +15,7 @@ function clearAll() {
   document.getElementById("equationArea").innerHTML = "";
 
   defaultResult = true;
+  canDigit = true;
   automaticCalculate = false;
   number1 = null;
   number2 = null;
@@ -32,6 +33,8 @@ function backspace() {
     document.getElementById("resultArea").innerText = "0";
     defaultResult = true;
   }
+
+  canDigit = true;
 }
 
 function formatFontSize(area) {
@@ -49,13 +52,16 @@ function formatFontSize(area) {
       area = "1.5rem";
       canDigit = false;
       break;
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+      area = "1.2rem";
+      break;
     default:
-      if (area.length > 16) {
-        parseFloat(area).toFixed(16);
-        area = "1.4rem";
-      } else {
-        area = "2rem";
-      }
+      area = "2rem";
       break;
   }
   return area;
@@ -80,10 +86,10 @@ function calculate(number1, number2) {
     default:
       break;
   }
-
   document.getElementById("resultArea").style.fontSize = formatFontSize(
     answer.toString()
   );
+
   return answer.toString().replace(".", ",");
 }
 

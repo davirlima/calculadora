@@ -6,6 +6,8 @@ let number2 = null;
 let alreadyCalculate = false;
 let automaticCalculate = true;
 
+let canDigit = true;
+
 function clearAll() {
   document.getElementById("resultArea").innerHTML = "0";
   document.getElementById("resultArea").style.fontSize = "2rem";
@@ -32,6 +34,33 @@ function backspace() {
   }
 }
 
+function formatFontSize(area) {
+  switch (area.length) {
+    case 13:
+      area = "1.8rem";
+      break;
+    case 14:
+      area = "1.7rem";
+      break;
+    case 15:
+      area = "1.6rem";
+      break;
+    case 16:
+      area = "1.5rem";
+      canDigit = false;
+      break;
+    default:
+      if (area.length > 16) {
+        parseFloat(area).toFixed(16);
+        area = "1.4rem";
+      } else {
+        area = "2rem";
+      }
+      break;
+  }
+  return area;
+}
+
 function calculate(number1, number2) {
   let answer = 0;
 
@@ -52,19 +81,10 @@ function calculate(number1, number2) {
       break;
   }
 
-  if (answer.toString().length > 16) {
-    let beforeDot = answer
-      .toString()
-      .slice(0, answer.toString().indexOf(".")).length;
-    document.getElementById("resultArea").style.fontSize = "1.6rem";
-
-    return answer
-      .toFixed(16 - beforeDot - 1)
-      .toString()
-      .replace(".", ",");
-  } else {
-    return answer.toString().replace(".", ",");
-  }
+  document.getElementById("resultArea").style.fontSize = formatFontSize(
+    answer.toString()
+  );
+  return answer.toString().replace(".", ",");
 }
 
 function print(value) {
@@ -90,28 +110,23 @@ function print(value) {
 
       defaultResult = true;
       alreadyCalculate = true;
+      canDigit = true;
       automaticCalculate = false;
       number1 = null;
       number2 = null;
       break;
 
     case ",":
-      // if (canDigit == true) {
-      if (
-        document.getElementById("resultArea").innerText[
-          document.getElementById("resultArea").innerText.length - 1
-        ] == ","
-      ) {
-        document.getElementById("resultArea").innerHTML += "";
-      } else if (defaultResult == true) {
-        document.getElementById("resultArea").innerHTML = "0,";
-        defaultResult = false;
-        // automaticCount = true;
-        // alreadyCount = false;
-      } else {
-        document.getElementById("resultArea").innerHTML += ",";
+      if (canDigit == true) {
+        if (document.getElementById("resultArea").innerText.includes(",")) {
+          document.getElementById("resultArea").innerHTML += "";
+        } else if (defaultResult == true) {
+          document.getElementById("resultArea").innerHTML = "0,";
+          defaultResult = false;
+        } else {
+          document.getElementById("resultArea").innerHTML += ",";
+        }
       }
-      // }
       break;
 
     case "+":
@@ -141,8 +156,7 @@ function print(value) {
         number2 = parseFloat(
           document.getElementById("resultArea").innerText.replace(",", ".")
         );
-
-        number1 = parseFloat(calculate(number1, number2));
+        number1 = parseFloat(calculate(number1, number2).replace(",", "."));
         number2 = null;
         document.getElementById("equationArea").innerHTML =
           number1.toString().replace(".", ",") + ` ${value} `;
@@ -155,6 +169,7 @@ function print(value) {
         automaticCalculate = true;
         alreadyCalculate = false;
       }
+      canDigit = true;
       break;
 
     default:
@@ -168,9 +183,14 @@ function print(value) {
         defaultResult = false;
         alreadyCalculate = false;
         automaticCalculate = false;
-      } else {
+      } else if (canDigit == true) {
         document.getElementById("resultArea").innerHTML += value;
       }
+
       break;
   }
+
+  document.getElementById("resultArea").style.fontSize = formatFontSize(
+    document.getElementById("resultArea").innerText
+  );
 }

@@ -1,11 +1,31 @@
-<h1>Calculadora</h1>
-<p>Está é uma aplicação web de uma calculadora padrão, que realiza contas, automaticamente, a cada dois números inseridos</p>
-<h2>Utilizou-se:</h2>
+# Calculadora
+
+Esta é uma aplicação web de uma calculadora padrão que realiza contas automaticamente a cada dois números inseridos
+
+## Tecnologias:
 <div style=display: inline-block>
-  <img height="40px" alt ="Davi-HTML5" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" target="_blank">
-  <img height="40px" alt ="Davi-CSS3" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" target="_blank">
-  <img height="40px" alt ="Davi-Java Script" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" target="_blank">
+  <img
+      height="50px"
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+      alt="Logo HTML"
+  />
+  <img 
+    height="50px"
+    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
+    alt="Logo CSS"
+  />
+  <img 
+    height="50px"
+    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+    alt="Logo JavaScript"
+  />
 </div>
 
-<h2>Acesse a aplicação:</h2>
-<a href="https://davirlima.github.io/calculadora/">https://davirlima.github.io/calculadora/</a>
+## Interface:
+<img
+  src="https://user-images.githubusercontent.com/97968740/185643911-9a88508f-b21d-4dcf-abe3-39b0143f8393.png"
+  alt="Interfaca da Aplicação Calculadora"
+/>
+
+## Acesse a aplicação:
+<https://davirlima.github.io/calculadora/>
